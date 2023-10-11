@@ -128,4 +128,72 @@ public class Field {
         }
         return sb.toString();
     }
+
+    /*
+    Training Methods
+     */
+    public int sumHoles() {
+        int sum = 0;
+        for (int c = 0; c < cols; c++) {
+            boolean filledCellFound = false;
+            for (int r = 0; r < rows; r++) {
+                if (board[r][c] == 1) filledCellFound = true;
+                if (filledCellFound && board[r][c] == 0) sum++;
+            }
+        }
+        return sum;
+    }
+
+    public int sumHeight() {
+        int sum = 0;
+        for (int c = 0; c < cols; c++) {
+            for (int r = 0; r < rows; r++) {
+                if (board[r][c] == 1) {
+                    sum += (rows - r);
+                    break;
+                }
+            }
+        }
+        return sum;
+    }
+
+    public int rowFlip() {
+        int flips = 0;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 1; c < cols; c++) {
+                if (board[r][c] != board[r][c-1]) flips++;
+            }
+        }
+        return flips;
+    }
+
+    public int columnFlip() {
+        int flips = 0;
+        for (int c = 0; c < cols; c++) {
+            for (int r = 1; r < rows; r++) {
+                if (board[r][c] != board[r-1][c]) flips++;
+            }
+        }
+        return flips;
+    }
+
+    public int pieceHeight(Tetromino tetromino, int rotationIndex, int startCol) {
+        int[][] shape = tetromino.getRotation(rotationIndex);
+        int startRow = placeTetromino(tetromino, rotationIndex, startCol);
+        return startRow >= 0 ? (rows - startRow) : -1;
+    }
+
+    public int sumWell() {
+        int sum = 0;
+        for (int c = 1; c < cols - 1; c++) {
+            int wellHeight = 0;
+            for (int r = 0; r < rows; r++) {
+                if (board[r][c] == 0 && board[r][c-1] == 1 && board[r][c+1] == 1) {
+                    wellHeight++;
+                }
+            }
+            sum += wellHeight * wellHeight;
+        }
+        return sum;
+    }
 }

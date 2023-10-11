@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="94049ba1-9ab8-48ad-a08b-285ee49ffb60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/tetris/Field.java" afterDir="false" />
+    <list default="true" id="94049ba1-9ab8-48ad-a08b-285ee49ffb60" name="Changes" comment="Initial Commit">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/tetris/TetrisAI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/tetris/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/tetris/Field.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,11 +52,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1697020050725</updated>
-      <workItem from="1697020051770" duration="1879000" />
+      <workItem from="1697020051770" duration="2534000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial Commit">
+      <option name="closed" value="true" />
+      <created>1697027263330</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697027263330</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
   </component>
 </project>
