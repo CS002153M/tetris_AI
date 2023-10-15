@@ -7,6 +7,7 @@ public class Field {
     public int rows = 20;
     public int cols = 10;
     public int score = 0;
+    public int linesClearedInLatestMove = 0;
     private int[][] board;
     public boolean isActive;
 
@@ -121,7 +122,7 @@ public class Field {
             }
         }
 
-        clearLines();
+        linesClearedInLatestMove = clearLines() + 1;
         updateIsActive();
         score++;
 
@@ -146,26 +147,35 @@ public class Field {
     }
 
     // Check for complete lines and clear them
-    public void clearLines() {
+    public int clearLines() {
+        int linesCleared = 0;  // Initialize counter to 0
+
         for (int r = 0; r < rows; r++) {
             boolean lineComplete = true;
+
             for (int c = 0; c < cols; c++) {
                 if (board[r][c] == 0) {
                     lineComplete = false;
                     break;
                 }
             }
+
             if (lineComplete) {
+                linesCleared++;  // Increment counter when a line is cleared
+
                 // Shift all lines down
                 for (int dr = r; dr >= 1; dr--) {
                     System.arraycopy(board[dr - 1], 0, board[dr], 0, cols);
                 }
+
                 // Clear the top line
                 for (int c = 0; c < cols; c++) {
                     board[0][c] = 0;
                 }
             }
         }
+
+        return linesCleared;  // Return the counter
     }
 
     // Get value at a specific point

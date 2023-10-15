@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 public class AI {
     public static void train() throws ExecutionException, InterruptedException {
         int populationSize = 100;
-        int numGenerations = 10;
+        int numGenerations = 50;
         int numThreads = 32;  // Number of threads
 
         long startTime = System.currentTimeMillis();
@@ -21,8 +21,7 @@ public class AI {
         // Initialize Population
         List<double[]> population = new ArrayList<>();
         for (int i = 0; i < populationSize; i++) {
-            //population.add(initializeRandomWeights());
-            population.add(new double[]{0.17210448943709622, 5.222542017654775, 0.5916050684303311, 3.6125814647637458, 4.728053799800609});
+            population.add(initializeRandomWeights());
         }
 
         // Run Genetic Algorithm
@@ -146,7 +145,7 @@ public class AI {
         for (int rotation = 0; rotation < 4; rotation++) {
             for (int x = 0; x < field.cols; x++) {
                 int y = field.canPlaceTetromino(tetromino, rotation, x);
-                if (y != -1) {
+                if (y > 0) {
                     moves.add(new Move(tetromino, rotation, x, y));
                 }
             }

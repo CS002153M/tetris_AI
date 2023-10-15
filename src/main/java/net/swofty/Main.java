@@ -11,11 +11,9 @@ import java.util.concurrent.ExecutionException;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-        AI.train();
-
         Field field = new Field();
         field.isActive = true;
-        double[] weights = new double[]{0.17210448943709622, 5.222542017654775, 0.5916050684303311, 3.6125814647637458, 4.728053799800609};
+        double[] weights = new double[]{0.3530402080118964, 2.714523087393916, 1.476554458549091, 2.914816700535999, 3.8358749995219608};
 
         int score = 0;
         while (field.isActive) {
@@ -34,16 +32,15 @@ public class Main {
                 }
             }
 
-            if (bestMove == null) {
+            if (bestMove == null)  {
                 field.isActive = false;
                 break;
             }
             field.placeTetromino(bestMove.getValue().tetromino, bestMove.getValue().rotation, bestMove.getValue().x);
             score += 1;
 
-            System.out.println("Placing tetromino \n" + bestMove.getValue().tetromino.toString(bestMove.getValue().rotation) + " at rotation " + bestMove.getValue().rotation + " at x " + bestMove.getValue().x);
+            System.out.println("Placing tetromino \n" + bestMove.getValue().tetromino.toString(bestMove.getValue().rotation) + " at rotation " + bestMove.getValue().rotation + " at x " + bestMove.getValue().x + " with score " + score);
             System.out.println(field);
-            Thread.sleep(1000);
         }
     }
 }
