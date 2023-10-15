@@ -1,27 +1,49 @@
 package net.swofty;
 
+import com.sun.jdi.connect.Connector;
 import net.swofty.tetris.Field;
 
+import java.util.AbstractMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        AI.train();
+
         Field field = new Field();
-        int columnI = field.placeTetromino(Field.Tetromino.T, 0, 4);
+        field.isActive = true;
+        double[] weights = new double[]{0.17210448943709622, 5.222542017654775, 0.5916050684303311, 3.6125814647637458, 4.728053799800609};
 
-        // 	The sum of squared well heights. A well is an opening 1 cell wide, which happens to function as a chokepoint.
-        System.out.println("Sum Well " + field.sumWell());
+        int score = 0;
+        while (field.isActive) {
+            Field.Tetromino randomTetromino = Field.Tetromino.values()[new Random().nextInt(Field.Tetromino.values().length)];
+            List<AI.Move> possibleMoves = AI.getPossibleMoves(field, randomTetromino);
+            Map.Entry<Double, AI.Move> bestMove = null;
 
-        // The count of all holes on the grid. A cell is a hole if it is empty and a filled cell is above it.
-        System.out.println("Sum Holes " + field.sumHoles());
+            for (int i = 0; i < possibleMoves.size(); i++) {
+                AI.Move move = possibleMoves.get(i);
+                Field fieldClone = field.clone();
+                fieldClone.placeTetromino(move.tetromino, move.rotation, move.x);
+                Double fieldScore = fieldClone.score(weights[0], weights[1], weights[2], weights[3], weights[4]);
 
-        // The sum of the column heights.
-        System.out.println("Sum Height " + field.sumHeight());
+                if (bestMove == null || bestMove.getKey() > fieldScore) {
+                    bestMove = new AbstractMap.SimpleEntry<>(fieldScore, move);
+                }
+            }
 
-        // The number of times neighboring cells flip between empty and filled along a column.
-        System.out.println("Column Flip " + field.columnFlip());
+            if (bestMove == null) {
+                field.isActive = false;
+                break;
+            }
+            field.placeTetromino(bestMove.getValue().tetromino, bestMove.getValue().rotation, bestMove.getValue().x);
+            score += 1;
 
-        // The number of times neighboring cells flip between empty and filled along a row.
-        System.out.println("Row Flip " + field.rowFlip());
-
-        System.out.println(field);
+            System.out.println("Placing tetromino \n" + bestMove.getValue().tetromino.toString(bestMove.getValue().rotation) + " at rotation " + bestMove.getValue().rotation + " at x " + bestMove.getValue().x);
+            System.out.println(field);
+            Thread.sleep(1000);
+        }
     }
 }
