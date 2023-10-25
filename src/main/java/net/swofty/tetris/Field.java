@@ -1,13 +1,15 @@
 package net.swofty.tetris;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Field {
     public int rows = 20;
     public int cols = 10;
     public int score = 0;
-    public int linesClearedInLatestMove = 0;
+    public Map.Entry<Integer, Integer> linesClearedInLastFive = new AbstractMap.SimpleEntry<>(0, 0);
     private int[][] board;
     public boolean isActive;
 
@@ -78,8 +80,8 @@ public class Field {
         isActive = true; // Initialize to true as the game is active initially
     }
 
-    public double score(double weightWell, double weightHoles, double weightHeight, double weightColumn, double weightRow) {
-        return (sumWell() * weightWell) + (sumHoles() * weightHoles) + (sumHeight() * weightHeight) + (columnFlip() * weightColumn) + (rowFlip() * weightRow);
+    public double score(double weightWell, double weightHoles, double weightHeight, double weightColumn, double weightRow, double weightLines) {
+        return (sumWell() * weightWell) + (sumHoles() * weightHoles) + (sumHeight() * weightHeight) + (columnFlip() * weightColumn) + (rowFlip() * weightRow) + (linesClearedInLastFive.getValue() * weightLines);
     }
 
     public void updateIsActive() {
@@ -122,7 +124,13 @@ public class Field {
             }
         }
 
-        linesClearedInLatestMove = clearLines() + 1;
+        if (linesClearedInLastFive.getKey() < 6) {
+            int newValue = clearLines() + linesClearedInLastFive.getValue();
+            linesClearedInLastFive = new AbstractMap.SimpleEntry<>(linesClearedInLastFive.getKey() + 1, newValue);
+        } else {
+            linesClearedInLastFive = new AbstractMap.SimpleEntry<>(0, clearLines());
+        }
+
         updateIsActive();
         score++;
 

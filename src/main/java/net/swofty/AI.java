@@ -12,7 +12,7 @@ public class AI {
     public static void train() throws ExecutionException, InterruptedException {
         int populationSize = 100;
         int numGenerations = 50;
-        int numThreads = 32;  // Number of threads
+        int numThreads = 16;
 
         long startTime = System.currentTimeMillis();
 
@@ -102,8 +102,8 @@ public class AI {
     }
 
     public static double[] initializeRandomWeights() {
-        double[] weights = new double[5];
-        for (int i = 0; i < 5; i++) {
+        double[] weights = new double[6];
+        for (int i = 0; i < 6; i++) {
             weights[i] = (Math.random() * 10) - 5;
         }
         return weights;
@@ -123,7 +123,7 @@ public class AI {
                 Move move = possibleMoves.get(i);
                 Field fieldClone = field.clone();
                 fieldClone.placeTetromino(move.tetromino, move.rotation, move.x);
-                Double fieldScore = fieldClone.score(weights[0], weights[1], weights[2], weights[3], weights[4]);
+                Double fieldScore = fieldClone.score(weights[0], weights[1], weights[2], weights[3], weights[4], weights[5]);
 
                 if (bestMove == null || bestMove.getKey() > fieldScore) {
                     bestMove = new AbstractMap.SimpleEntry<>(fieldScore, move);
@@ -154,15 +154,15 @@ public class AI {
     }
 
     public static double[] crossover(double[] parent1, double[] parent2) {
-        double[] child = new double[5];
-        for (int i = 0; i < 5; i++) {
+        double[] child = new double[6];
+        for (int i = 0; i < 6; i++) {
             child[i] = Math.random() < 0.5 ? parent1[i] : parent2[i];
         }
         return child;
     }
 
     public static void mutate(double[] individual) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             if (Math.random() < 0.1) {
                 individual[i] += (Math.random() * 2) - 1;
             }
@@ -170,9 +170,9 @@ public class AI {
     }
 
     public static class Move {
-        Field.Tetromino tetromino;
-        int rotation;
-        int x;
+        public Field.Tetromino tetromino;
+        public int rotation;
+        public int x;
         int y;
 
         public Move(Field.Tetromino tetromino, int rotation, int x, int y) {
