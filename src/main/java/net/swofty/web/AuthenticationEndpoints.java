@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class AuthenticationEndpoints {
         });
 
         before("/protected/*", (request, response) -> {
+            System.out.println(Arrays.toString(User.users.stream().map(user -> user.authenticationToken).toArray()));
             if (User.getFromAuthenticationToken(request.headers("token")) == null) {
                 halt(401, "Go Away!");
             }
