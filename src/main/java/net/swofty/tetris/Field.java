@@ -191,37 +191,6 @@ public class Field {
         return board[row][col];
     }
 
-    public double[] extractFeatures() {
-        List<Double> features = new ArrayList<>();
-
-        // Extracting basic metrics
-        features.add((double) sumHoles());
-        features.add((double) sumHeight());
-        features.add((double) rowFlip());
-        features.add((double) columnFlip());
-        features.add((double) sumWell());
-
-        // Extracting metrics for each Tetromino
-        for (Tetromino tetromino : Tetromino.values()) {
-            for (int rotation = 0; rotation < tetromino.shapes.length; rotation++) {
-                for (int col = 0; col < cols; col++) {
-                    int pieceHeight = pieceHeight(tetromino, rotation, col);
-                    if (pieceHeight != -1) {
-                        features.add((double) pieceHeight);
-                    }
-                }
-            }
-        }
-
-        // Convert ArrayList to array
-        double[] featureArray = new double[features.size()];
-        for (int i = 0; i < features.size(); i++) {
-            featureArray[i] = features.get(i);
-        }
-
-        return featureArray;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -318,12 +287,6 @@ public class Field {
             }
         }
         return flips;
-    }
-
-    public int pieceHeight(Tetromino tetromino, int rotationIndex, int startCol) {
-        int[][] shape = tetromino.getRotation(rotationIndex);
-        int startRow = placeTetromino(tetromino, rotationIndex, startCol);
-        return startRow >= 0 ? (rows - startRow) : -1;
     }
 
     public int sumWell() {

@@ -17,8 +17,8 @@ public class FieldEndpoints {
             Field field = AuthenticationEndpoints.users.get(user);
 
             Field.Tetromino tetromino = Field.Tetromino.valueOf(request.headers("tetromino"));
-            int rotation = Integer.parseInt(request.queryParamOrDefault("rotation", "0"));
-            int x = Integer.parseInt(request.queryParamOrDefault("x", "0"));
+            int rotation = Integer.parseInt(request.headers("rotation"));
+            int x = Integer.parseInt(request.headers("x"));
 
             field.placeTetromino(tetromino, rotation, x);
             AuthenticationEndpoints.users.put(user, field);
